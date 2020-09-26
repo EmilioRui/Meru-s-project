@@ -26,10 +26,12 @@ from queue import Queue
 # requests_log.setLevel(logging.DEBUG)
 # requests_log.propagate = True
 
-n_captha = 50   #numero di captcha da ottenere durante un programma
+queue = Queue(maxsize = 0 )     #questa è la coda dove ci saranno i chaptcha teoricamente 
+n_threads = 100              #numero di processi che vuoi in parallelo
+url = 'https://www.statuto18.com/DunkHighMaizeBlue'
 
 
-def solve_captcha(queue):
+def solve_captcha(queue, url):
     solver = recaptchaV2Proxyless()
     solver.set_verbose(1)
     solver.set_key("bef80b4f70976b0452b83cddf6f9b152")
@@ -90,6 +92,8 @@ def main():
                 # else:
                 #     print("task finished with error " + solver.error_code)
 
+                while queue.empty():
+                    time.sleep(0.1)
                 g_response = queue.get()
                 form_data = {
                     'nome2': row['Nome'],
@@ -142,16 +146,15 @@ def main():
 
 
 
-queue = Queue(maxsize = 0 )     #questa è la coda dove ci saranno i chaptcha teoricamente 
-n_threads = 100              #numero di processi che vuoi in parallelo
 
-if name == if __name__ == "__main__":
+if __name__ == "__main__":
     for i in range(n_threads):
+        """ url e qui sotto!!!!!!!"""
+        
         # if i == 10:     #cosi scegli quale thread dedicare al main
         #     work = Thread (target= main())
         # else:
-        t = Thread(target = solve_captcha, args = (queue,))
-        t.setDaemon(True)
+        t = Thread(target = solve_captcha, args = (queue,url, ))
         t.start()
 
     main()
