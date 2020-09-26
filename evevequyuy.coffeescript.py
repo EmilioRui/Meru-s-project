@@ -12,7 +12,7 @@ import time
 import requests
 from anticaptchaofficial.recaptchav2proxyless import *
 from selenium.webdriver.support.select import Select
-
+from time import sleep
 
 # PATH = "C:/Program Files (x86)/chromedriver.exe"
 # driver = webdriver.Chrome(PATH)
