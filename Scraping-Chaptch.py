@@ -32,18 +32,19 @@ url = 'https://www.statuto18.com/DunkHighMaizeBlue'
 
 
 def solve_captcha(queue, url):
-    solver = recaptchaV2Proxyless()
-    solver.set_verbose(1)
-    solver.set_key("bef80b4f70976b0452b83cddf6f9b152")
-    solver.set_website_url(url)
-    solver.set_website_key("6LdrtrgUAAAAAAAio3UhHrVdJUQXpP3vfbcFm3qx")
-    g_response = solver.solve_and_return_solution()
-    if g_response != 0:
-        print("g-response: " + g_response)
-        queue.put(g_response)
-        queue.task_done
-    else:
-        print("task finished with error " + solver.error_code)
+    while True:
+        solver = recaptchaV2Proxyless()
+        solver.set_verbose(1)
+        solver.set_key("bef80b4f70976b0452b83cddf6f9b152")
+        solver.set_website_url(url)
+        solver.set_website_key("6LdrtrgUAAAAAAAio3UhHrVdJUQXpP3vfbcFm3qx")
+        g_response = solver.solve_and_return_solution()
+        if g_response != 0:
+            print("g-response: " + g_response)
+            queue.put(g_response)
+            queue.task_done
+        else:
+            print("task finished with error " + solver.error_code)
 
 
 def main():
