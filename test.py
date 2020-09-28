@@ -8,11 +8,12 @@ from bs4 import BeautifulSoup
 from requests_toolbelt import MultipartEncoder
 from threading import Thread
 from queue import Queue
+import queue
 import threading
 
 
-queue = Queue(maxsize = 0 )     #questa è la coda dove ci saranno i chaptcha teoricamente 
-n_threads = 10              #numero di processi che vuoi in parallelo
+queue = queue.LifoQueue(maxsize = 0 )     #questa è la coda dove ci saranno i chaptcha teoricamente 
+n_threads = 50         #numero di processi che vuoi in parallelo
 url = 'https://www.statuto18.com/DunkHighMaizeBlue'
 
 

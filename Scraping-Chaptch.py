@@ -7,7 +7,7 @@ from anticaptchaofficial.recaptchav2proxyless import *
 from bs4 import BeautifulSoup
 from requests_toolbelt import MultipartEncoder
 from threading import Thread
-from queue import Queue
+from queue import Queue,LifoQueue
 
 
 """domanda: i chaptcha devono essere per forza dentro quei cicli o li posso mettere anche fuori? """
@@ -26,7 +26,7 @@ from queue import Queue
 # requests_log.setLevel(logging.DEBUG)
 # requests_log.propagate = True
 
-queue = Queue(maxsize = 0 )     #questa è la coda dove ci saranno i chaptcha teoricamente 
+queue = LifoQueue(maxsize = 0 )     #questa è la coda dove ci saranno i chaptcha teoricamente 
 n_threads = 100              #numero di processi che vuoi in parallelo
 url = 'https://www.statuto18.com/DunkHighMaizeBlue'
 
